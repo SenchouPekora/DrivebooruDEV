@@ -40,8 +40,6 @@
     </style>
 </head>
 <body>
-    <input type="text" id="search-box" placeholder="Search by tag">
-    <button onclick="search()">Search</button>
     <div id="image-container"></div>
     <div id="pagination"></div>
     <script>
@@ -50,29 +48,14 @@
         var lines = [];
 
         window.onload = function() {
-            fetch('FileData.txt')
+            fetch('list.txt')
                 .then(response => response.text())
                 .then(data => {
-                    lines = data.split('\n').filter(line => line.trim()).map(line => JSON.parse(line));
+                    lines = data.split('\n').filter(line => line.trim());
                     displayPage(currentPage);
                     displayPagination();
                 });
         };
-
-        function search() {
-            var searchBox = document.getElementById('search-box');
-            var tag = searchBox.value.trim();
-
-            // Filter the lines array to only include lines that contain the specified tag
-            var filteredLines = lines.filter(line => {
-                return line.tags && line.tags.includes(tag);
-            });
-
-            // Update the lines array and display the first page
-            lines = filteredLines;
-            displayPage(1);
-            displayPagination();
-        }
 
         function displayPage(pageNumber) {
             var imageContainer = document.getElementById('image-container');
@@ -85,13 +68,13 @@
 
             pageLines.forEach(line => {
                 const img = document.createElement('img');
-                img.src = `https://drive.google.com/thumbnail?id=${line.id}&sz=w150`;
+                img.src = `https://drive.google.com/thumbnail?id=${line}&sz=w150`;
                 img.classList.add('image-box');
 
                 const a = document.createElement('a');
                 a.href = `javascript:void(0)`;
                 a.onclick = function() {
-                    window.open(`viewer.html?id=${line.id}`, '_blank');
+                    window.open(`viewer.html?id=${line}`, '_blank');
                 };
 
                 a.appendChild(img);
@@ -106,8 +89,12 @@
 
             var totalPages = Math.ceil(lines.length / imagesPerPage);
 
+
             createButton(paginationDiv, '<<', 1, totalPages);
+
+
             createButton(paginationDiv, '<', Math.max(1, currentPage - 1), totalPages);
+
 
             var start = Math.max(1, currentPage - 2);
             var end = Math.min(totalPages, currentPage + 2);
@@ -115,7 +102,10 @@
                 createButton(paginationDiv, i.toString(), i, totalPages);
             }
 
+
             createButton(paginationDiv, '>', Math.min(totalPages, currentPage + 1), totalPages);
+
+
             createButton(paginationDiv, '>>', totalPages, totalPages);
         }
 
