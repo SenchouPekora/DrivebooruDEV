@@ -3,5 +3,5 @@ Imageboard using Google Drive to host images.
 
 - [ ] Favoriting
 - [ ] Commenting
-- [ ] User uploads
+- [x] User uploads
 - [ ] More improvements
