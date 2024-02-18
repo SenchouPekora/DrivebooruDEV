@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Drivebooru</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #0f1936;
+        }
+        iframe {
+        width: 100%;
+        height: 80%;
+        min-width: 300px;
+        min-height: 300px;
+        border: none;
+    }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #092e9a;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <iframe id="image" src="" allowfullscreen></iframe>
+    <button id="download">Download</button>
+    <script>
+        var params = new URLSearchParams(window.location.search);
+        var id = params.get('id');
+        var imageUrl = `https://drive.google.com/file/d/${id}/preview`;
+        document.getElementById('image').src = imageUrl;
+        document.getElementById('download').onclick = function() {
+            window.location.href = `https://drive.google.com/uc?export=download&id=${id}`;
+        };
+    </script>
+</body>
+</html>
