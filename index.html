@@ -50,10 +50,10 @@
         var lines = [];
 
         window.onload = function() {
-            fetch('list.txt')
+            fetch('FileData.txt')
                 .then(response => response.text())
                 .then(data => {
-                    lines = data.split('\n').filter(line => line.trim());
+                    lines = data.split('\n').filter(line => line.trim()).map(line => JSON.parse(line));
                     displayPage(currentPage);
                     displayPagination();
                 });
@@ -65,8 +65,7 @@
 
             // Filter the lines array to only include lines that contain the specified tag
             var filteredLines = lines.filter(line => {
-                var json = JSON.parse(line);
-                return json.tags.includes(tag);
+                return line.tags && line.tags.includes(tag);
             });
 
             // Update the lines array and display the first page
@@ -86,13 +85,13 @@
 
             pageLines.forEach(line => {
                 const img = document.createElement('img');
-                img.src = `https://drive.google.com/thumbnail?id=${line}&sz=w150`;
+                img.src = `https://drive.google.com/thumbnail?id=${line.id}&sz=w150`;
                 img.classList.add('image-box');
 
                 const a = document.createElement('a');
                 a.href = `javascript:void(0)`;
                 a.onclick = function() {
-                    window.open(`viewer.html?id=${line}`, '_blank');
+                    window.open(`viewer.html?id=${line.id}`, '_blank');
                 };
 
                 a.appendChild(img);
