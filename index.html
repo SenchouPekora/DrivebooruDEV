@@ -2,13 +2,38 @@
 <html>
 <head>
     <title>Drivebooru</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f1936;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+        h1, p {
+            text-align: center;
+        }
+        .character-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #092e9a;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to Drivebooru</h1>
-    <p>Select a character to view their images:</p>
-    <ul>
-        <li><a href="gallery.html?character=Furina">Furina</a></li>
-        <li><a href="gallery.html?character=Firefly">Firefly</a></li>
-    </ul>
+    <h1>Drivebooru</h1>
+    <p>Available characters to view:</p>
+    <a href="gallery.html?character=Furina" class="character-button">Furina</a>
+    <a href="gallery.html?character=Firefly" class="character-button">Firefly</a>
 </body>
 </html>
