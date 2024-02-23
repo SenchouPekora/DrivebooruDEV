@@ -19,6 +19,16 @@
         h1, p {
             text-align: center;
         }
+        .category-row {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+        }
+        .category {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         .character-button {
             margin-top: 20px;
             padding: 10px 20px;
@@ -35,14 +45,19 @@
     <h1>Drivebooru</h1>
     <p style="font-size: 0.8em; margin-top: 0;">1,937 works available</p>
     <p>Select a category to view:</p>
-
-    <h2>Genshin Impact</h2>
-    <a href="gallery.html?character=Placeholder" class="character-button">Placeholder (Genshin Impact)</a>
-
-    <h2>Honkai: Star Rail</h2>
-    <a href="gallery.html?character=Placeholder" class="character-button">Placeholder (Honkai: Star Rail)</a>
-
-    <h2>Hololive</h2>
-    <a href="gallery.html?character=sakamata_chloe" class="character-button">Sakamata Chloe (Hololive)</a>
+    <div class="category-row">
+        <div class="category">
+            <h2>Genshin Impact</h2>
+            <a href="gallery.html?character=Placeholder" class="character-button">Placeholder (Genshin Impact)</a>
+        </div>
+        <div class="category">
+            <h2>Honkai: Star Rail</h2>
+            <a href="gallery.html?character=Placeholder" class="character-button">Placeholder (Honkai: Star Rail)</a>
+        </div>
+        <div class="category">
+            <h2>Hololive</h2>
+            <a href="gallery.html?character=Sakamata Chloe" class="character-button">Sakamata Chloe (Hololive)</a>
+        </div>
+    </div>
 </body>
 </html>
