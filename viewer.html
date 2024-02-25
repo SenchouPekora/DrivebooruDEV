@@ -89,13 +89,25 @@
             var user = firebase.auth().currentUser;
             if (user) {
                 var db = firebase.firestore();
-                db.collection('users').doc(user.uid).collection('favorites').doc(id).set({})
-                .then(function() {
-                    console.log('Image added to favorites');
-                    document.getElementById('favorite').innerText = 'Remove from Favorites';
-                })
-                .catch(function(error) {
-                    console.error('Error adding image to favorites: ', error);
+                var docRef = db.collection('users').doc(user.uid).collection('favorites').doc(id);
+                docRef.get().then(function(doc) {
+                    if (doc.exists) {
+                        docRef.delete().then(function() {
+                            console.log('Image removed from favorites');
+                            document.getElementById('favorite').innerText = 'Add to Favorites';
+                        }).catch(function(error) {
+                            console.error('Error removing image from favorites: ', error);
+                        });
+                    } else {
+                        docRef.set({}).then(function() {
+                            console.log('Image added to favorites');
+                            document.getElementById('favorite').innerText = 'Remove from Favorites';
+                        }).catch(function(error) {
+                            console.error('Error adding image to favorites: ', error);
+                        });
+                    }
+                }).catch(function(error) {
+                    console.log('Error getting document:', error);
                 });
             } else {
                 console.log('User not signed in');

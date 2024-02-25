@@ -90,45 +90,55 @@
         }
 
         function displayPagination() {
-            var paginationDiv = document.getElementById('pagination');
-            paginationDiv.innerHTML = '';
+    var paginationDiv = document.getElementById('pagination');
+    paginationDiv.innerHTML = '';
 
-            var totalPages = Math.ceil(lines.length / imagesPerPage);
+    // Create "Home" button
+    createButton(paginationDiv, 'Home', 'index.html');
 
+    var totalPages = Math.ceil(lines.length / imagesPerPage);
 
-            createButton(paginationDiv, '<<', 1, totalPages);
+    createButton(paginationDiv, '<<', 1, totalPages);
+    createButton(paginationDiv, '<', Math.max(1, currentPage - 1), totalPages);
 
+    var start = Math.max(1, currentPage - 2);
+    var end = Math.min(totalPages, currentPage + 2);
+    for (let i = start; i <= end; i++) {
+        createButton(paginationDiv, i.toString(), i, totalPages);
+    }
 
-            createButton(paginationDiv, '<', Math.max(1, currentPage - 1), totalPages);
+    createButton(paginationDiv, '>', Math.min(totalPages, currentPage + 1), totalPages);
+    createButton(paginationDiv, '>>', totalPages, totalPages);
 
+    // Create "Favorites" button
+    createButton(paginationDiv, 'Favorites', 'favorites.html');
+}
 
-            var start = Math.max(1, currentPage - 2);
-            var end = Math.min(totalPages, currentPage + 2);
-            for (let i = start; i <= end; i++) {
-                createButton(paginationDiv, i.toString(), i, totalPages);
-            }
+function createButton(container, text, action, totalPages) {
+    var button = document.createElement('div');
+    button.textContent = text;
+    button.classList.add('page-number');
 
-
-            createButton(paginationDiv, '>', Math.min(totalPages, currentPage + 1), totalPages);
-
-
-            createButton(paginationDiv, '>>', totalPages, totalPages);
+    if (typeof action === 'string') {
+        // If action is a string, it's a URL for the button
+        button.onclick = function() {
+            window.location.href = action;
+        };
+    } else {
+        // If action is a number, it's a page number for the button
+        if (action === currentPage || action < 1 || action > totalPages) {
+            button.classList.add('disabled');
+        } else {
+            button.onclick = function() {
+                displayPage(action);
+                displayPagination();
+            };
         }
+    }
 
-        function createButton(container, text, pageNumber, totalPages) {
-            var button = document.createElement('div');
-            button.textContent = text;
-            button.classList.add('page-number');
-            if (pageNumber === currentPage || pageNumber < 1 || pageNumber > totalPages) {
-                button.classList.add('disabled');
-            } else {
-                button.onclick = function() {
-                    displayPage(pageNumber);
-                    displayPagination();
-                };
-            }
-            container.appendChild(button);
-        }
+    container.appendChild(button);
+}
+
     </script>
 </body>
 </html>
