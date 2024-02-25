@@ -93,7 +93,6 @@
     var paginationDiv = document.getElementById('pagination');
     paginationDiv.innerHTML = '';
 
-    // Create "Home" button
     createButton(paginationDiv, 'Home', 'index.html');
 
     var totalPages = Math.ceil(lines.length / imagesPerPage);
@@ -110,7 +109,6 @@
     createButton(paginationDiv, '>', Math.min(totalPages, currentPage + 1), totalPages);
     createButton(paginationDiv, '>>', totalPages, totalPages);
 
-    // Create "Favorites" button
     createButton(paginationDiv, 'Favorites', 'favorites.html');
 }
 
@@ -120,12 +118,10 @@ function createButton(container, text, action, totalPages) {
     button.classList.add('page-number');
 
     if (typeof action === 'string') {
-        // If action is a string, it's a URL for the button
         button.onclick = function() {
             window.location.href = action;
         };
     } else {
-        // If action is a number, it's a page number for the button
         if (action === currentPage || action < 1 || action > totalPages) {
             button.classList.add('disabled');
         } else {
