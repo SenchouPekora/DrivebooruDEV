@@ -29,26 +29,27 @@
             gap: 10px;
         }
         button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            border-radius: 5px;
-            background-color: #092e9a;
-            color: white;
-            cursor: pointer;
-            text-decoration: none;
-            text-align: center;
-        }
+    margin: 0 10px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #092e9a;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    }
+
     </style>
 </head>
 <body>
     <iframe id="image" src="" allowfullscreen></iframe>
     <div id="button-row-1" class="button-row">
         <button id="download">Download</button>
-        <button id="favorite" style="display: none;">Add to Favorites</button>
-        <button id="sign-in">Sign-In to Favorite</button>
+        <button id="favorite" style="display: none;">Add to favorites</button>
+        <button id="sign-in">Sign-in to favorite</button>
     </div>
     <div id="button-row-2" class="button-row">
-        <button id="view-favorites">View Favorites</button>
+        <button id="view-favorites">View favorites</button>
     </div>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
@@ -93,14 +94,14 @@
                     if (doc.exists) {
                         docRef.delete().then(function() {
                             console.log('Image removed from favorites');
-                            document.getElementById('favorite').innerText = 'Add to Favorites';
+                            document.getElementById('favorite').innerText = 'Add to favorites';
                         }).catch(function(error) {
                             console.error('Error removing image from favorites: ', error);
                         });
                     } else {
                         docRef.set({}).then(function() {
                             console.log('Image added to favorites');
-                            document.getElementById('favorite').innerText = 'Remove from Favorites';
+                            document.getElementById('favorite').innerText = 'Remove from favorites';
                         }).catch(function(error) {
                             console.error('Error adding image to favorites: ', error);
                         });
@@ -122,9 +123,9 @@
         var docRef = db.collection('users').doc(user.uid).collection('favorites').doc(id);
         docRef.get().then(function(doc) {
             if (doc.exists) {
-                document.getElementById('favorite').innerText = 'Remove from Favorites';
+                document.getElementById('favorite').innerText = 'Remove from favorites';
             } else {
-                document.getElementById('favorite').innerText = 'Add to Favorites';
+                document.getElementById('favorite').innerText = 'Add to favorites';
             }
         }).catch(function(error) {
             console.log('Error getting document:', error);
