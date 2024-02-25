@@ -39,8 +39,6 @@
     <iframe id="image" src="" allowfullscreen></iframe>
     <button id="download">Download</button>
     <button id="favorite">Favorite</button>
-    <button id="sign-in">Sign-In</button>
-    <button id="view-favorites">View Favorites</button>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
@@ -71,26 +69,15 @@
                 db.collection('users').doc(user.uid).collection('favorites').add({
                     imageId: id
                 })
-                .then(function() {
-                    console.log('Image added to favorites');
+                .then(function(docRef) {
+                    console.log('Image added to favorites with ID: ', docRef.id);
                 })
                 .catch(function(error) {
-                    console.log(error.message);
+                    console.error('Error adding image to favorites: ', error);
                 });
             } else {
                 console.log('User not signed in');
             }
-        };
-        var provider = new firebase.auth.GoogleAuthProvider();
-        document.getElementById('sign-in').onclick = function() {
-            firebase.auth().signInWithPopup(provider).then(function(result) {
-                console.log('User signed in');
-            }).catch(function(error) {
-                console.log(error.message);
-            });
-        };
-        document.getElementById('view-favorites').onclick = function() {
-            window.location.href = 'favorites.html';
         };
     </script>
 </body>
