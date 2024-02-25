@@ -3,53 +3,27 @@
 <head>
     <link rel="icon" href="drivebooru.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Drivebooru</title>
+    <title>Favorites - Drivebooru</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
             background-color: #0f1936;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
             font-family: 'Montserrat', sans-serif;
         }
-        iframe {
-            width: 100%;
-            height: 80%;
-            min-width: 300px;
-            min-height: 300px;
-            border: none;
-        }
-        .button-row {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            border-radius: 5px;
+        .image-box {
             background-color: #092e9a;
-            color: white;
-            cursor: pointer;
-            text-decoration: none;
-            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 10px;
+            flex: 1 0 12%;
         }
     </style>
 </head>
 <body>
-    <iframe id="image" src="" allowfullscreen></iframe>
-    <div id="button-row-1" class="button-row">
-        <button id="download">Download</button>
-        <button id="favorite" style="display: none;">Add to Favorites</button>
-        <button id="sign-in">Sign-In to Favorite</button>
-    </div>
-    <div id="button-row-2" class="button-row">
-        <button id="view-favorites">View Favorites</button>
-    </div>
+    <div id="image-container"></div>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
@@ -66,72 +40,25 @@
         };
         firebase.initializeApp(firebaseConfig);
 
-        var params = new URLSearchParams(window.location.search);
-        var id = params.get('id');
-        var imageUrl = `https://drive.google.com/file/d/${id}/preview`;
-        document.getElementById('image').src = imageUrl;
-        document.getElementById('download').onclick = function() {
-            window.location.href = `https://drive.google.com/uc?export=download&id=${id}`;
-        };
-
-        var provider = new firebase.auth.GoogleAuthProvider();
-        document.getElementById('sign-in').onclick = function() {
-            firebase.auth().signInWithPopup(provider).then(function(result) {
-                console.log('User signed in');
-                document.getElementById('sign-in').style.display = 'none';
-                document.getElementById('favorite').style.display = 'inline-block';
-            }).catch(function(error) {
-                console.log(error.message);
-            });
-        };
-
-        document.getElementById('favorite').onclick = function() {
-            var user = firebase.auth().currentUser;
+        firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 var db = firebase.firestore();
-                var docRef = db.collection('users').doc(user.uid).collection('favorites').doc(id);
-                docRef.get().then(function(doc) {
-                    if (doc.exists) {
-                        docRef.delete().then(function() {
-                            console.log('Image removed from favorites');
-                            document.getElementById('favorite').innerText = 'Add to Favorites';
-                        }).catch(function(error) {
-                            console.error('Error removing image from favorites: ', error);
-                        });
-                    } else {
-                        docRef.set({}).then(function() {
-                            console.log('Image added to favorites');
-                            document.getElementById('favorite').innerText = 'Remove from Favorites';
-                        }).catch(function(error) {
-                            console.error('Error adding image to favorites: ', error);
-                        });
-                    }
-                }).catch(function(error) {
-                    console.log('Error getting document:', error);
+                db.collection('users').doc(user.uid).collection('favorites').get().then(function(querySnapshot) {
+                    querySnapshot.forEach(function(doc) {
+                        const img = document.createElement('img');
+                        img.src = `https://drive.google.com/thumbnail?id=${doc.data().imageId}&sz=w150`;
+                        img.classList.add('image-box');
+
+                        const a = document.createElement('a');
+                        a.href = `viewer.html?id=${doc.data().imageId}`;
+
+                        a.appendChild(img);
+
+                        document.getElementById('image-container').appendChild(a);
+                    });
                 });
             } else {
                 console.log('User not signed in');
-            }
-        };
-
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                document.getElementById('sign-in').style.display = 'none';
-                document.getElementById('favorite').style.display = 'inline-block';
-                var db = firebase.firestore();
-                var docRef = db.collection('users').doc(user.uid).collection('favorites').doc(id);
-                docRef.get().then(function(doc) {
-                    if (doc.exists) {
-                        document.getElementById('favorite').innerText = 'Remove from Favorites';
-                    } else {
-                        document.getElementById('favorite').innerText = 'Add to Favorites';
-                    }
-                }).catch(function(error) {
-                    console.log('Error getting document:', error);
-                });
-            } else {
-                document.getElementById('sign-in').style.display = 'inline-block';
-                document.getElementById('favorite').style.display = 'none';
             }
         });
     </script>
