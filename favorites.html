@@ -41,26 +41,27 @@
         firebase.initializeApp(firebaseConfig);
 
         firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                var db = firebase.firestore();
-                db.collection('users').doc(user.uid).collection('favorites').get().then(function(querySnapshot) {
-                    querySnapshot.forEach(function(doc) {
-                        const img = document.createElement('img');
-                        img.src = `https://drive.google.com/thumbnail?id=${doc.data().imageId}&sz=w150`;
-                        img.classList.add('image-box');
+    if (user) {
+        var db = firebase.firestore();
+        db.collection('users').doc(user.uid).collection('favorites').get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                const img = document.createElement('img');
+                img.src = `https://drive.google.com/thumbnail?id=${doc.id}&sz=w150`;
+                img.classList.add('image-box');
 
-                        const a = document.createElement('a');
-                        a.href = `viewer.html?id=${doc.data().imageId}`;
+                const a = document.createElement('a');
+                a.href = `viewer.html?id=${doc.id}`;
 
-                        a.appendChild(img);
+                a.appendChild(img);
 
-                        document.getElementById('image-container').appendChild(a);
-                    });
-                });
-            } else {
-                console.log('User not signed in');
-            }
+                document.getElementById('image-container').appendChild(a);
+            });
         });
+    } else {
+        console.log('User not signed in');
+    }
+});
+
     </script>
 </body>
 </html>
