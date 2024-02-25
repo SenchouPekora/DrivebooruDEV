@@ -48,7 +48,7 @@
         <button id="sign-in">Sign-In to Favorite</button>
     </div>
     <div id="button-row-2" class="button-row">
-        <button id="view-favorites">View Favorites</button>
+        <button id="view-favorites" style="display: none;">View Favorites</button>
     </div>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
@@ -80,6 +80,7 @@
                 console.log('User signed in');
                 document.getElementById('sign-in').style.display = 'none';
                 document.getElementById('favorite').style.display = 'inline-block';
+                document.getElementById('view-favorites').style.display = 'inline-block';
             }).catch(function(error) {
                 console.log(error.message);
             });
@@ -89,25 +90,13 @@
             var user = firebase.auth().currentUser;
             if (user) {
                 var db = firebase.firestore();
-                var docRef = db.collection('users').doc(user.uid).collection('favorites').doc(id);
-                docRef.get().then(function(doc) {
-                    if (doc.exists) {
-                        docRef.delete().then(function() {
-                            console.log('Image removed from favorites');
-                            document.getElementById('favorite').innerText = 'Add to Favorites';
-                        }).catch(function(error) {
-                            console.error('Error removing image from favorites: ', error);
-                        });
-                    } else {
-                        docRef.set({}).then(function() {
-                            console.log('Image added to favorites');
-                            document.getElementById('favorite').innerText = 'Remove from Favorites';
-                        }).catch(function(error) {
-                            console.error('Error adding image to favorites: ', error);
-                        });
-                    }
-                }).catch(function(error) {
-                    console.log('Error getting document:', error);
+                db.collection('users').doc(user.uid).collection('favorites').doc(id).set({})
+                .then(function() {
+                    console.log('Image added to favorites');
+                    document.getElementById('favorite').innerText = 'Remove from Favorites';
+                })
+                .catch(function(error) {
+                    console.error('Error adding image to favorites: ', error);
                 });
             } else {
                 console.log('User not signed in');
@@ -118,6 +107,7 @@
             if (user) {
                 document.getElementById('sign-in').style.display = 'none';
                 document.getElementById('favorite').style.display = 'inline-block';
+                document.getElementById('view-favorites').style.display = 'inline-block';
                 var db = firebase.firestore();
                 var docRef = db.collection('users').doc(user.uid).collection('favorites').doc(id);
                 docRef.get().then(function(doc) {
@@ -132,6 +122,7 @@
             } else {
                 document.getElementById('sign-in').style.display = 'inline-block';
                 document.getElementById('favorite').style.display = 'none';
+                document.getElementById('view-favorites').style.display = 'none';
             }
         });
 
