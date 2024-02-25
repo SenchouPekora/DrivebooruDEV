@@ -11,7 +11,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start; /* Align content to the top */
+            justify-content: center;
             height: 100vh;
             margin: 0;
             font-family: 'Montserrat', sans-serif;
@@ -29,17 +29,13 @@
             text-decoration: none;
             text-align: center;
         }
-        #pagination {
-            position: fixed; /* Fix position to the bottom */
-            bottom: 0; /* Position at the bottom */
-            width: 100%; /* Full width */
-            display: flex;
-            justify-content: center; /* Center content horizontally */
-        }
     </style>
 </head>
 <body>
     <h1>Drivebooru</h1>
+
+    <div id="pagination" class="button-row">
+    </div>
 
     <h3>Genshin Impact</h2>
     <a href="gallery.html?character=Placeholder" class="character-button">Placeholder</a>
@@ -54,10 +50,6 @@
     <h3>Blue Archive</h2>
     <a href="gallery.html?character=kazusa" class="character-button">Kazusa</a>
 
-    <div id="pagination" class="button-row">
-        <!-- The "Home" and "Favorites" buttons will be added here -->
-    </div>
-
     <script>
         function createButton(container, text, action) {
             var button = document.createElement('a');
@@ -69,7 +61,6 @@
 
         function displayPagination() {
             var paginationDiv = document.getElementById('pagination');
-            createButton(paginationDiv, 'Home', 'index.html');
             createButton(paginationDiv, 'Favorites', 'favorites.html');
         }
 
