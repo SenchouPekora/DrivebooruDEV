@@ -39,6 +39,15 @@
             text-align: center;
             border: none;
         }
+        #pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #0f1936;
+        }
     </style>
 </head>
 <body>
@@ -84,6 +93,13 @@
                 console.log(error.message);
             });
         };
+
+        function displayPagination() {
+    var paginationDiv = document.getElementById('pagination');
+    paginationDiv.innerHTML = '';
+
+    createButton(paginationDiv, 'Home', 'index.html');
+}
 
         document.getElementById('favorite').onclick = function() {
             var user = firebase.auth().currentUser;
