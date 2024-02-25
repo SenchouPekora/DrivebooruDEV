@@ -28,13 +28,15 @@
             justify-content: center;
             gap: 10px;
         }
-        .button {
-            margin: 0 10px;
-            cursor: pointer;
+        button {
+            margin-top: 20px;
             padding: 10px 20px;
             border-radius: 5px;
             background-color: #092e9a;
             color: white;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
         }
     </style>
 </head>
@@ -112,33 +114,25 @@
         };
 
         firebase.auth().onAuthStateChanged(function(user) {
-    var signInButton = document.getElementById('sign-in');
-    var favoriteButton = document.getElementById('favorite');
-    var viewFavoritesButton = document.getElementById('view-favorites');
-
-    signInButton.classList.add('button');
-    favoriteButton.classList.add('button');
-    viewFavoritesButton.classList.add('button');
-
     if (user) {
-        signInButton.style.display = 'none';
-        favoriteButton.style.display = 'inline-block';
-        viewFavoritesButton.style.display = 'inline-block';
+        document.getElementById('sign-in').style.display = 'none';
+        document.getElementById('favorite').style.display = 'inline-block';
+        document.getElementById('view-favorites').style.display = 'inline-block';
         var db = firebase.firestore();
         var docRef = db.collection('users').doc(user.uid).collection('favorites').doc(id);
         docRef.get().then(function(doc) {
             if (doc.exists) {
-                favoriteButton.innerText = 'Remove from Favorites';
+                document.getElementById('favorite').innerText = 'Remove from Favorites';
             } else {
-                favoriteButton.innerText = 'Add to Favorites';
+                document.getElementById('favorite').innerText = 'Add to Favorites';
             }
         }).catch(function(error) {
             console.log('Error getting document:', error);
         });
     } else {
-        signInButton.style.display = 'inline-block';
-        favoriteButton.style.display = 'none';
-        viewFavoritesButton.style.display = 'none';
+        document.getElementById('sign-in').style.display = 'inline-block';
+        document.getElementById('favorite').style.display = 'none';
+        document.getElementById('view-favorites').style.display = 'none';
     }
 });
 
