@@ -32,12 +32,14 @@ h1, p {
 .category {
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: center; /* Center align items */
 }
 .button-row {
     display: flex;
-    flex-direction: column;
+    flex-direction: row; /* Change to row */
     gap: 10px;
+    justify-content: center; /* Center align items */
+    flex-wrap: wrap; /* Wrap items to next line if they overflow */
 }
     </style>
 </head>
@@ -47,32 +49,13 @@ h1, p {
     <div id="pagination" class="button-row">
     </div>
 
+    <!-- Repeat this structure for each category -->
     <div class="category">
-        <h3>Genshin Impact</h3>
+        <h3>Category Name</h3>
         <div class="button-row">
-            <a href="gallery.html?character=Placeholder" class="character-button">Placeholder</a>
-        </div>
-    </div>
-
-    <div class="category">
-        <h3>Honkai: Star Rail</h3>
-        <div class="button-row">
-            <a href="gallery.html?character=firefly" class="character-button">Firefly</a>
-            <a href="gallery.html?character=fu_xuan" class="character-button">Fu Xuan</a>
-        </div>
-    </div>
-
-    <div class="category">
-        <h3>Hololive</h3>
-        <div class="button-row">
-            <a href="gallery.html?character=sakamata_chloe" class="character-button">Sakamata Chloe</a>
-        </div>
-    </div>
-
-    <div class="category">
-        <h3>Blue Archive</h3>
-        <div class="button-row">
-            <a href="gallery.html?character=kazusa" class="character-button">Kazusa</a>
+            <a href="gallery.html?character=character1" class="character-button">Character 1</a>
+            <a href="gallery.html?character=character2" class="character-button">Character 2</a>
+            <!-- Add more character buttons as needed -->
         </div>
     </div>
 
