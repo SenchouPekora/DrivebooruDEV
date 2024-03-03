@@ -5,30 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #0f1936;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            font-family: 'Montserrat', sans-serif;
-        }
-        h1, p {
-            text-align: center;
-        }
-        .character-button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            border-radius: 5px;
-            background-color: #092e9a;
-            color: white;
-            cursor: pointer;
-            text-decoration: none;
-            text-align: center;
-        }
+body {
+    background-color: #0f1936;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+h1, p {
+    text-align: center;
+}
+.character-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #092e9a;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+}
+.category {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
     </style>
 </head>
 <body>
@@ -37,18 +47,34 @@
     <div id="pagination" class="button-row">
     </div>
 
-    <h3>Genshin Impact</h2>
-    <a href="gallery.html?character=Placeholder" class="character-button">Placeholder</a>
+    <div class="category">
+        <h3>Genshin Impact</h3>
+        <div class="button-row">
+            <a href="gallery.html?character=Placeholder" class="character-button">Placeholder</a>
+        </div>
+    </div>
 
-    <h3>Honkai: Star Rail</h2>
-    <a href="gallery.html?character=firefly" class="character-button">Firefly</a>
-    <a href="gallery.html?character=fu_xuan" class="character-button">Fu Xuan</a>
+    <div class="category">
+        <h3>Honkai: Star Rail</h3>
+        <div class="button-row">
+            <a href="gallery.html?character=firefly" class="character-button">Firefly</a>
+            <a href="gallery.html?character=fu_xuan" class="character-button">Fu Xuan</a>
+        </div>
+    </div>
 
-    <h3>Hololive</h2>
-    <a href="gallery.html?character=sakamata_chloe" class="character-button">Sakamata Chloe</a>
+    <div class="category">
+        <h3>Hololive</h3>
+        <div class="button-row">
+            <a href="gallery.html?character=sakamata_chloe" class="character-button">Sakamata Chloe</a>
+        </div>
+    </div>
 
-    <h3>Blue Archive</h2>
-    <a href="gallery.html?character=kazusa" class="character-button">Kazusa</a>
+    <div class="category">
+        <h3>Blue Archive</h3>
+        <div class="button-row">
+            <a href="gallery.html?character=kazusa" class="character-button">Kazusa</a>
+        </div>
+    </div>
 
     <script>
         function createButton(container, text, action) {
