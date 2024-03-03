@@ -2,6 +2,7 @@
 <html>
 <head>
     <link rel="icon" href="drivebooru.ico" type="image/x-icon">
+    <title>Drivebooru</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -32,14 +33,14 @@ h1, p {
 .category {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center align items */
+    align-items: center;
 }
 .button-row {
     display: flex;
-    flex-direction: row; /* Change to row */
+    flex-direction: row;
     gap: 10px;
-    justify-content: center; /* Center align items */
-    flex-wrap: wrap; /* Wrap items to next line if they overflow */
+    justify-content: center;
+    flex-wrap: wrap;
 }
     </style>
 </head>
@@ -49,15 +50,30 @@ h1, p {
     <div id="pagination" class="button-row">
     </div>
 
-    <!-- Repeat this structure for each category -->
     <div class="category">
-        <h3>Category Name</h3>
+        <h3>Honkai: Star Rail</h3>
         <div class="button-row">
-            <a href="gallery.html?character=character1" class="character-button">Character 1</a>
-            <a href="gallery.html?character=character2" class="character-button">Character 2</a>
-            <!-- Add more character buttons as needed -->
+            <a href="gallery.html?character=firefly" class="character-button">Firefly</a>
+            <a href="gallery.html?character=fu_xuan" class="character-button">Fu Xuan</a>
+            <a href="gallery.html?character=sparkle" class="character-button">Sparkle</a>
+            <a href="gallery.html?character=ruan_mei" class="character-button">Ruan Mei</a>
         </div>
     </div>
+
+    <div class="category">
+        <h3>Hololive</h3>
+        <div class="button-row">
+            <a href="gallery.html?character=sakamata_chloe" class="character-button">Sakamata Chloe</a>
+        </div>
+    </div>
+
+    <div class="category">
+        <h3>Blue Archive</h3>
+        <div class="button-row">
+            <a href="gallery.html?character=kazusa" class="character-button">Kazusa</a>
+        </div>
+    </div>
+
 
     <script>
         function createButton(container, text, action) {
