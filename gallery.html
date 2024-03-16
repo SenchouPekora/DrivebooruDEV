@@ -49,7 +49,7 @@
         var imagesPerPage = 64;
         var lines = [];
 
-        window.onload = function() {
+        window.addEventListener('load', function() {
     var params = new URLSearchParams(window.location.search);
     var character = params.get('character');
     fetch(`Lists/${character}.txt`)
@@ -59,7 +59,21 @@
             displayPage(currentPage);
             displayPagination();
         });
-};
+});
+
+window.addEventListener('load', function() {
+    var params = new URLSearchParams(window.location.search);
+    var character = params.get('character');
+
+    var words = character.replace(/_/g, ' ').split(' ');
+
+    for (var i = 0; i < words.length; i++) {
+        words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+    }
+
+    document.title = "Drivebooru | " + words.join(' ');
+});
+
 
         function displayPage(pageNumber) {
             var imageContainer = document.getElementById('image-container');
@@ -132,21 +146,6 @@ function createButton(container, text, action, totalPages) {
 
     container.appendChild(button);
 }
-
-
-    </script>
-    <script>
-        window.onload = function() {
-            var params = new URLSearchParams(window.location.search);
-            var character = params.get('character');
-
-            var words = character.replace(/_/g, ' ').split(' ');
-
-            for (var i = 0; i < words.length; i++) {
-                words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
-            }
-            document.title = "Drivebooru | " + words.join(' ');
-        };
     </script>
 </body>
 </html>
