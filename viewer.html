@@ -5,6 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Drivebooru</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        window.onload = function() {
+            var params = new URLSearchParams(window.location.search);
+            var character = params.get('character');
+            fetch(`Lists/${character}.txt`)
+                .then(response => response.text())
+                .then(data => {
+                    lines = data.split('\n').filter(line => line.trim());
+                    displayPage(currentPage);
+                    displayPagination();
+
+                    var words = character.replace(/_/g, ' ').split(' ');
+
+                    for (var i = 0; i < words.length; i++) {
+                        words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+                    }
+
+                    document.title = "Drivebooru | " + words.join(' ');
+                });
+        };
+    </script>
+
     <style>
         body {
             display: flex;

@@ -5,6 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Drivebooru</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        window.onload = function() {
+            var params = new URLSearchParams(window.location.search);
+            var character = params.get('character');
+            fetch(`Lists/${character}.txt`)
+                .then(response => response.text())
+                .then(data => {
+                    lines = data.split('\n').filter(line => line.trim());
+                    displayPage(currentPage);
+                    displayPagination();
+
+                    var words = character.replace(/_/g, ' ').split(' ');
+
+                    for (var i = 0; i < words.length; i++) {
+                        words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+                    }
+
+                    document.title = "Drivebooru | " + words.join(' ');
+                });
+        };
+    </script>
     <style>
         body {
             background-color: #0f1936;
@@ -21,11 +42,11 @@
             flex: 1 0 12%;
         }
         #pagination {
-            position: fixed; /* Fix position to the bottom */
-            bottom: 0; /* Position at the bottom */
-            width: 100%; /* Full width */
+            position: fixed;
+            bottom: 0;
+            width: 100%;
             display: flex;
-            justify-content: center; /* Center content horizontally */
+            justify-content: center;
         }
         .page-number {
             margin: 0 10px;
@@ -39,6 +60,15 @@
             color: gray;
             cursor: not-allowed;
         }
+
+        @media (max-width: 600px) {
+        .pagination-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -91,23 +121,26 @@
     var paginationDiv = document.getElementById('pagination');
     paginationDiv.innerHTML = '';
 
-    createButton(paginationDiv, 'Home', 'index.html');
+    var homeFavoritesDiv = document.createElement('div');
+    homeFavoritesDiv.classList.add('pagination-row');
+    createButton(homeFavoritesDiv, 'Home', 'index.html');
+    createButton(homeFavoritesDiv, 'Favorites', 'favorites.html');
+    paginationDiv.appendChild(homeFavoritesDiv);
 
     var totalPages = Math.ceil(lines.length / imagesPerPage);
 
-    createButton(paginationDiv, '<<', 1, totalPages);
-    createButton(paginationDiv, '<', Math.max(1, currentPage - 1), totalPages);
+    var buttonsDiv = document.createElement('div');
+    buttonsDiv.classList.add('pagination-row');
+    createButton(buttonsDiv, '<', Math.max(1, currentPage - 1), totalPages);
 
-    var start = Math.max(1, currentPage - 2);
-    var end = Math.min(totalPages, currentPage + 2);
+    var start = currentPage;
+    var end = Math.min(totalPages, currentPage + 1);
     for (let i = start; i <= end; i++) {
-        createButton(paginationDiv, i.toString(), i, totalPages);
+        createButton(buttonsDiv, i.toString(), i, totalPages);
     }
 
-    createButton(paginationDiv, '>', Math.min(totalPages, currentPage + 1), totalPages);
-    createButton(paginationDiv, '>>', totalPages, totalPages);
-
-    createButton(paginationDiv, 'Favorites', 'favorites.html');
+    createButton(buttonsDiv, '>', Math.min(totalPages, currentPage + 1), totalPages);
+    paginationDiv.appendChild(buttonsDiv);
 }
 
 function createButton(container, text, action, totalPages) {
@@ -132,6 +165,7 @@ function createButton(container, text, action, totalPages) {
 
     container.appendChild(button);
 }
+
 
     </script>
 </body>
